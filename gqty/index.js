@@ -11,10 +11,10 @@ import { generatedSchema, scalarsEnumsHash } from "./schema.generated";
  */
 const queryFetcher = async function (
   { query, variables, operationName },
-  fetchOptions,
+  fetchOptions
 ) {
   // Modify "/api/graphql" if needed
-  const response = await fetch("/api/graphql", {
+  const response = await fetch("https://beta.pokeapi.co/graphql/v1beta", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const queryFetcher = async function (
 
   if (response.status >= 400) {
     throw new GQtyError(
-      `GraphQL endpoint responded with HTTP status ${response.status}.`,
+      `GraphQL endpoint responded with HTTP status ${response.status}.`
     );
   }
 
@@ -42,7 +42,7 @@ const queryFetcher = async function (
     throw new GQtyError(
       `Malformed JSON response: ${
         text.length > 50 ? text.slice(0, 50) + "..." : text
-      }`,
+      }`
     );
   }
 };
@@ -57,7 +57,7 @@ const cache = new Cache(
     maxAge: 0,
     staleWhileRevalidate: 5 * 60 * 1000,
     normalization: true,
-  },
+  }
 );
 
 /**
@@ -98,7 +98,6 @@ export const {
   prepareReactRender,
   useHydrateCache,
   prepareQuery,
-  useSubscription,
 } =
   /**
    * @type {import("@gqty/react").ReactClient<import("./schema.generated").GeneratedSchema>}

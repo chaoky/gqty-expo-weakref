@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { useQuery } from "./gqty/index";
 
 export default function App() {
@@ -7,8 +7,15 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
-      {query.pokemon_v2_berry().map(({ name }) => (
-        <Text>{name}</Text>
+      <Button
+        title="fetch"
+        onPress={() => {
+          console.log("refetch started");
+          query.$refetch().then(() => console.log("refetch done"));
+        }}
+      />
+      {query.pokemon_v2_berry().map(({ name, id }) => (
+        <Text key={id ?? 0}>{name ?? "loading"}</Text>
       ))}
       <StatusBar style="auto" />
     </View>
